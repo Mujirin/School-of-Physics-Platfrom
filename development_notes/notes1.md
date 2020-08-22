@@ -37,10 +37,10 @@ di bagian paling atas sopp/setting.py
 - Buat file .gitignore setara dengan README.md
 - Tambahkan di file tersebut
 
-	# Secret key #
+	# # Secret key
 	setingan_rahasia.py
 
-	# Ignore Mac system files #
+	# # Ignore Mac system files
 	.DS_Store
 
 ### Commit to the repo
