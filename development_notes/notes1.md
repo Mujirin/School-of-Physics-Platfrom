@@ -38,9 +38,11 @@ di bagian paling atas sopp/setting.py
 - Tambahkan di file tersebut
 
 	(Secret key)
+
 	setingan_rahasia.py
 
 	(Ignore Mac system files)
+	
 	.DS_Store
 
 ### Commit to the repo
