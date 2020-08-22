@@ -3,12 +3,6 @@
 ### Cloning Repository
 After creating Github repository, in somewhere of your computers
 $ git clone github.com-Mujirin:Mujirin/School-of-Physics-Platfrom.git
-### Commit to the repo
-	$ git status
-	$ git add .
-	$ git status
-	$ git commit -m "Initial commit."
-	$ git push
 ## Creating project
 ### Virtual environment
 #### Creating virtual environment
@@ -27,8 +21,19 @@ $ git clone github.com-Mujirin:Mujirin/School-of-Physics-Platfrom.git
 	$ cd sopp
 #### Running the development server
 	$ python manage.py runserver
-See the welcoming site in localhost:8000/ 
+See the welcoming site in localhost:8000/
+### Secret key
+	- Buat file setara dengan manage.py dengan nama setingan_rahasia.py
+	- Cut SECRET_KEY di sopp/setting.py dan taruh di setingan_rahasia.py
+	- Tambahakan 
+		> from setingan_rahasia import * di bagian paling atas sopp/setting.py
 
+### Commit to the repo
+	$ git status
+	$ git add .
+	$ git status
+	$ git commit -m "Initial commit."
+	$ git push
 ## Migrations
 	$ python manage.py migrate
 ## Creating superuser

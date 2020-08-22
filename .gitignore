@@ -1,0 +1,5 @@
+# Secret key
+setingan_rahasia.py
+
+# Ignore Mac system files
+.DS_Store
