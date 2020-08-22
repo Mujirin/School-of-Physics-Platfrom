@@ -3,7 +3,7 @@
 ### Cloning Repository
 After creating Github repository, in somewhere of your computers
 
-$ git clone github.com-Mujirin:Mujirin/School-of-Physics-Platfrom.git
+	$ git clone github.com-Mujirin:Mujirin/School-of-Physics-Platfrom.git
 
 ## Creating project
 ### Virtual environment
@@ -25,22 +25,23 @@ $ git clone github.com-Mujirin:Mujirin/School-of-Physics-Platfrom.git
 	$ python manage.py runserver
 See the welcoming site in **localhost:8000/**
 ### Secret key
-	- Buat file setara dengan manage.py dengan nama setingan_rahasia.py
-	- Cut SECRET_KEY di sopp/setting.py dan taruh di setingan_rahasia.py
-	- Tambahakan
+- Buat file setara dengan manage.py dengan nama setingan_rahasia.py
+- Cut SECRET_KEY di sopp/setting.py dan taruh di setingan_rahasia.py
+- Tambahakan
 
-			from setingan_rahasia import *
+	from setingan_rahasia import *
 
-		di bagian paling atas sopp/setting.py
+di bagian paling atas sopp/setting.py
+
 ## Gitignore
-	- Buat file .gitignore setara dengan README.md
-	- Tambahkan di file tersebut
+- Buat file .gitignore setara dengan README.md
+- Tambahkan di file tersebut
 
-		# Secret key
-		setingan_rahasia.py
+	# Secret key
+	setingan_rahasia.py
 
-		# Ignore Mac system files
-		.DS_Store
+	# Ignore Mac system files
+	.DS_Store
 
 ### Commit to the repo
 	$ git status
@@ -60,11 +61,11 @@ Superuser created successfully.
 Then start the development server
 
 	$ python manage.py runserver
-	
-go to the development server by
 
-	$ http://localhost:8000/admin/
+go to the development server in the browser by
 
-enter the username and password
+	http://localhost:8000/admin/
+
+Enter the username and password
 ## Creating users app
 	$ python manage.py startapp users
