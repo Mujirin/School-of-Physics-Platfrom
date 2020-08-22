@@ -69,5 +69,4 @@ go to the development server in the browser by
 	http://localhost:8000/admin/
 
 Enter the username and password
-## Creating users app
-	$ python manage.py startapp users
+And now, you are in the admin page.
