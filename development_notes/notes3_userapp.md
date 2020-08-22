@@ -30,13 +30,13 @@ in users/views.py adding the following code so that it become
 Add the following code to the *sopp/urls.py*
 
 	from django.contrib import admin
-	from django.urls import path, **include**
+	from django.urls import path, <b>include</b>
 	from users import views as user_view
 
 
 	urlpatterns = [
 	    path('admin/', admin.site.urls),
-	    **path('register/', user_view.register, name='register'),**
+	    <b>path('register/', user_view.register, name='register'),</b>
 	]
 
 #### Creating base templates
