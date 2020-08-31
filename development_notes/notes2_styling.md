@@ -7,7 +7,7 @@ In settings.py add the following in bold in INSTALLED_APPS settings.py
 
 	INSTALLED_APPS = [
 	    'users.apps.UsersConfig',
-	    **'crispy_forms',**
+	    'crispy_forms',
 	    'django.contrib.admin',
 	    'django.contrib.auth',
 	    'django.contrib.contenttypes',
