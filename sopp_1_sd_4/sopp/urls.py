@@ -17,12 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from users import views as user_view
 
-admin.site.site_header = 'School of Physics'	# default: "Django Administration"
-admin.site.index_title = 'Site Administration'  # default: "Site administration"
-admin.site.site_title = 'SoP Site Admin'		# default: "Django site admin" 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', user_view.register, name='register'),
 ]
-
