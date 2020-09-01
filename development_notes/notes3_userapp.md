@@ -289,7 +289,43 @@ Add form.save in the *users/view.py*
 Then try close the development server, and run again, then create a new user in register page and klick “Sign Up” in the browser, and then see at admin page *http://localhost:8000/admin/auth/user/*, you will see that the new user had been created and saved there.
 
 
+### Adding email field in the user creation form (page)
+Create form file in users application directory *users/forms.py*
 
+	from django import forms
+	from django.contrib.auth.models import User
+	from django.contrib.auth.forms import UserCreationForm
+
+
+	class UserRegistrationForm(UserCreationForm):
+		email = form.EmailField() # By default required = True
+
+		class Meta:
+			model = User
+			fields = ['username', 'password1', 'password2', 'email']
+
+### Edit users views
+Edit *users/views.py* become
+
+	from django.shortcuts import render, redirect
+	from django.contrib import messages
+	*from .forms import UserRegisterForm*
+
+	def register(request):
+		if request.method == 'POST':
+			*form = UserRegisterForm(request.POST)*
+			if form.is_valid():
+				form.save()
+				username = form.cleaned_data.get('username')
+				# Flash message
+				messages.success(request, f'Account created for {username}')
+				# return redirect('blog-home')
+				return render(request, 'users/register.html', {'form': form})
+		else:
+			form = UserRegisterForm()
+		return render(request, 'users/register.html', {'form': form})
+
+Then start the development server and crate new user again, in this registration page you will see the email field and then look at the admin page that the new user has an email.
 
 
 
