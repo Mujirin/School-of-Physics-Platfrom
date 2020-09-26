@@ -1,0 +1,10 @@
+{% extends "users/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block page_name %}
+	<a style="font-size: 13px;" class="navbar-brand mr-4" href=""><span>&laquo;</span>&nbsp&nbsp&nbsp&nbsp {{page_name}}</a>
+{% endblock %}
+
+{% block content %}
+	<h1>{{ user.username }}</h1>
+{% endblock content %}
