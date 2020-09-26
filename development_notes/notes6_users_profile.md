@@ -609,4 +609,138 @@ And in the *apps.py* modul or *users/apps.py*
 To avoid side effect of how to import moduls.
 And then try to create a new user in the browser by register, and see that this user have a profile automatic created.
 
+### Update User Profile
+Create a form to update user and profile *users/froms.py*
+	
+	from django import forms
+	from django.contrib.auth.models import User
+	from django.contrib.auth.forms import UserCreationForm
+	*from .models import Profile*
 
+	class UserRegisterForm(UserCreationForm):
+		email = forms.EmailField() # Default required = True
+
+		class Meta:
+			model = User
+			fields = ['username', 'email', 'password1', 'password2']
+
+	*
+	class UserUpdateForm(forms.ModelForm):
+		email = forms.EmailField() # Default required = True
+
+		class Meta:
+			model = User
+			fields = ['username', 'email']
+
+	class ProfileUpdateForm(forms.ModelForm):
+		class Meta:
+			model = Profile
+			fields = ['image']*
+
+In this stage, we don’t update all field in the user and profile model, just username, email, and image.
+Add the form to profile view in *users/views.py*
+
+	from django.shortcuts import render, redirect
+	from django.contrib import messages
+	from django.contrib.auth.decorators import login_required
+	from .forms import UserRegisterForm, *UserUpdateForm, ProfileUpdateForm*
+
+	def register(request):
+		if request.method == 'POST':
+			form = UserRegisterForm(request.POST)
+			if form.is_valid():
+				form.save()
+				username = form.cleaned_data.get('username')
+				# Flash message
+				messages.success(request, f'Your account has been created! You are now able to log in')
+				return redirect('login')
+		else:
+			form = UserRegisterForm()
+		return render(request, 'users/register.html', {'form': form})
+
+
+	@login_required
+	def profile(request):
+		*u_form = UserUpdateForm()
+		p_form = ProfileUpdateForm()
+		context = {
+			'u_form': u_form,
+			'p_form': p_form
+		}*
+		return render(request, 'users/profile.html', *context*)
+
+### Update the profile templates
+Update *users/templates/users/profile.html*
+	
+	{% extends "users/base.html" %}
+	{% load crispy_forms_tags %}
+	{% block content %}
+		<div class="content-section">
+			<div class="media">
+				<img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+				<div class="media-body">
+					<h2 class="account-heading">{{ user.username }}</h2>
+					<p class="text-secondary">{{ user.email }}</p>
+				</div>
+			</div>
+			<form method="POST" enctype="multipart/form-data">
+				{% csrf_token %}
+				<fieldset class="form-group">
+					<legend class="border-bottom mb-4">
+						Profile Info
+					</legend>
+					{{ u_form|crispy }}
+					{{ p_form|crispy }}
+				</fieldset>
+				<div class="form-group">
+					<button class="btn btn-outline-info" type="submit">Update</button>
+				</div>
+			</form>
+		</div>
+	{% endblock content %}
+
+**Make sure enctype="multipart/form-data" add in the from tag, so multiple form working**, in this case the image saving etc. will working properly
+
+Test the result by go to the profile in the browser, in this time you won’t see the any information in the input field, this will be change to add the conditional request if it POST, request.FILES to the image file and flash message, and the validation of the form. And save it. And redirect it to profile page and test it. And do not save any changes.
+
+### Update profile view and add aditional base info
+Update *users/views.py*
+	from django.shortcuts import render, redirect
+	from django.contrib import messages
+	from django.contrib.auth.decorators import login_required
+	from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+
+	def register(request):
+		if request.method == 'POST':
+			form = UserRegisterForm(request.POST)
+			if form.is_valid():
+				form.save()
+				username = form.cleaned_data.get('username')
+				# Flash message
+				messages.success(request, f'Your account has been created! You are now able to log in')
+				return redirect('login')
+		else:
+			form = UserRegisterForm()
+		return render(request, 'users/register.html', {'form': form})
+
+
+	@login_required
+	def profile(request):
+		*if request.method == 'POST':
+			u_form = UserUpdateForm(request.POST, instance=request.user)
+			p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+			if u_form.is_valid() and p_form.is_valid():
+				u_form.save()
+				p_form.save()
+				messages.success(request, f'Your account updated')
+				return redirect('profile')
+
+		else:
+			u_form = UserUpdateForm(instance=request.user)
+			p_form = ProfileUpdateForm(instance=request.user.profile)*
+
+		context = {
+			'u_form': u_form,
+			'p_form': p_form
+		}
+		return render(request, 'users/profile.html', context)
